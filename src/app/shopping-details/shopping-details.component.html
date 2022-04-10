@@ -1,0 +1,79 @@
+<div>
+    <div class="row d-flex justify-content-between header">
+        <input class="modal-btn input-box" [(ngModel)]="searchTerms" placeholder="Search products..." />
+        <button type="button" class="btn btn-outline-secondary col-2 modal-btn add-product" (click)="AddItemToList(content)">Add
+            Product</button>
+    </div>
+</div>
+<div class="row no-gutters py-5" *ngIf="getProductData.length > 0">
+    <ng-container
+        *ngFor="let items of getProductData | productFilter : searchTerms ; trackBy: trackByIndex; let i = index">
+        <div class="card col-sm-12 col-md-4 col-lg-3 p-3 mb-3 ">
+            <span class="d-flex justify-content-end">
+                <i class="fa fa-heart" role='button'></i>
+            </span>
+            <img class="card-img" src="{{items.image}}" alt="Card Image">
+            <div class="card-body pt-4 pb-0">
+                <h5 class="card-title text-truncate d-block" title="{{items.category}}">{{items.category}}</h5>
+                <p class="card-text text-ellipsis description" title="{{items.description}}">{{items.description}}</p>
+                <p class="card-text text-ellipsis">
+                    <em title="${{items.price}}">${{items.price}}</em>
+                </p>
+                <button type="button" class="btn btn-outline-primary btn-sm me-2"
+                    (click)="updateProduct(items, content)">Update</button>
+                <button type="button" class="btn btn-outline-danger btn-sm"
+                    (click)="removedProduct(items)">Remove</button>
+            </div>
+        </div>
+    </ng-container>
+</div>
+
+<div class="text-center py-5" *ngIf="getProductData.length  == 0">
+    <h3>No Products Found</h3>
+</div>
+<ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="collectionSize"
+(pageChange)="pageChanged()"></ngb-pagination>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Product Details</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="reactiveForm" (ngSubmit)="onSubmit();">
+            <div formGroupName="productDetails">
+                <div class="mb-4">
+                    <label for="category" class="form-label">Category</label>
+                    <input type="text" class="form-control" id="category" formControlName="category" />
+                    <small class="text-danger"
+                        *ngIf="!productDetailsControls['category'].valid && productDetailsControls['category'].touched">
+                        {{messages.invalidCategory}}
+                    </small>
+                </div>
+                <div class="mb-4">
+                    <label for="description" class="form-label">Description</label>
+                    <input type="text" class="form-control" id="desc" formControlName="description" />
+                    <small class="text-danger"
+                        *ngIf="!productDetailsControls['description'].valid && productDetailsControls['description'].touched">
+                        {{messages.invalidDesc}}
+                    </small>
+                </div>
+                <div class="mb-4">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="number" class="form-control" id="price" formControlName="price" />
+                    <small class="text-danger"
+                        *ngIf="!productDetailsControls['price'].valid && productDetailsControls['price'].touched">
+                        {{messages.invalidPrice}}
+                    </small>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-outline-secondary modal-btn  main-bg me-2">{{isUpdate ? 'Update' :
+                    'Add'}}</button>
+                <button type="submit" class="btn btn-outline-danger modal-btn  main-bg"
+                    (click)="resetForm()">Reset</button>
+            </div>
+        </form>
+    </div>
+</ng-template>

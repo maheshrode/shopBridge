@@ -1,0 +1,77 @@
+.card {
+    border: none;
+    height: 400px;
+}
+
+.card:hover {
+    box-shadow: 0 0 15px 5px #d1d1d152;
+    z-index: 99;
+
+}
+
+.card-body {
+    flex: initial !important;
+}
+.fa-heart:hover{
+    color: red;
+}
+.card-img {
+    height: 150px;
+    width: 60%;
+    margin: 0 auto;
+}
+
+.description {
+    height: 48px;
+}
+
+
+.text-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.modal-body {
+    height: 50%;
+}
+
+.modal-btn {
+    width: 30%;
+}
+
+input.ng-touched.ng-invalid {
+    border: 1px solid red;
+    box-shadow: 0 0 13px inset rgba(255, 0, 0, 0.2);
+}
+
+@media screen and (min-width : 320px) and (max-width : 480px) {
+    .header{
+        flex-direction: column;
+    }
+    .input-box, .add-product {
+        width: 100% !important;
+    }
+
+    .input-box{
+        line-height: 2;
+    }
+    .add-product {
+        margin-top: 10px;
+    }
+}
+
+@media screen and (max-width : 767px) {
+    .card {
+        width: 100%;
+        padding: 25px !important;
+    }
+
+    // .btn-outline-secondary {
+    //     width: 50%;
+    // }
+
+
+}
